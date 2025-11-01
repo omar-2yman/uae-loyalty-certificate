@@ -8,13 +8,22 @@ body {
   overflow-x: hidden;
 }
 
+/* #########################################
+  ## هذا هو التعديل الأهم لحل المشكلة  ##
+  #########################################
+*/
 .hero {
   position: relative;
-  height: 100vh;
+  /* الحل هنا: 
+    بنقوله خد 100% من ارتفاع الشاشة، بس "اطرح" منه 80 بكسل (اللي هو ارتفاع الهيدر) 
+  */
+  height: calc(100vh - 80px); 
   background: url('uae-flag-bg.jpg') no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* حذفنا البادينج اللي ضفناه المرة اللي فاتت لأنه مش مطلوب مع الحل ده
+  */
 }
 
 .hero-video {
@@ -23,8 +32,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* يضمن ملء الفيديو للشاشة بدون تشويه */
-  z-index: 1; /* يضعه في الخلف */
+  object-fit: cover; 
+  z-index: 1; 
 }
 
 .overlay {
@@ -35,10 +44,10 @@ body {
   width: 85%;
   max-width: 1000px;
   box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-  
-  /* الإضافات الجديدة لضمان ظهوره فوق الفيديو */
   position: relative;
   z-index: 2;
+  /* أضفنا هذا السطر ليضمن عدم تجاوز المحتوى للارتفاع المتاح */
+  overflow-y: auto; 
 }
 
 .subtitle {
@@ -82,11 +91,203 @@ button:hover {
   background-color: #0b6a43;
 }
 
-.site-logo {
-  position: absolute; /* لوضع اللوجو بشكل مطلق بالنسبة للصفحة */
-  top: 30px;          /* مسافة 30 بكسل من الأعلى */
-  right: 40px;         /* مسافة 40 بكسل من اليمين */
-  width: 180px;       /* عرض اللوجو (يمكنك تغييره) */
-  height: auto;       /* للحفاظ على أبعاد الصورة */
-  z-index: 3;         /* للتأكد من ظهوره فوق الفيديو وفوق الـ overlay */
+/* ========== تنسيقات الترويسة الثابتة ========== */
+
+.main-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+    width: 100%;
+    position: sticky; 
+    top: 0;
+    z-index: 1000; 
+    direction: rtl; 
+    font-family: 'Cairo', sans-serif;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+    width: 90%;
+    max-width: 1400px; 
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; /* هذا سيضع الزر يميناً واللوجو يساراً */
+    align-items: center;
+}
+
+/* 1. زر "وثيقة صون العلم" (يمين) */
+.header-button {
+    background-color: #c8102e; 
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    white-space: nowrap; 
+}
+.header-button:hover {
+    background-color: #a10d25; 
+}
+
+/* 2. قائمة التنقل (تم حذفها من الـ HTML) */
+.main-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+.main-nav li {
+    margin: 0 15px; 
+}
+.main-nav a {
+    text-decoration: none;
+    color: #002b4e; 
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+.main-nav .arrow {
+    font-size: 0.7rem; 
+    margin-right: 5px;
+}
+
+/* 3. اللوجو (يسار) */
+.header-logo-link {
+    display: inline-block;
+}
+.header-logo {
+    height: 60px; 
+    width: auto;
+}
+
+
+/* ========== تنسيقات قسم التواصل (موجودة هنا) ========== */
+/* ... (باقي كود قسم التواصل كما هو) ... */
+
+.contact-section {
+  background-color: #f8f9fa; 
+  padding: 60px 0;
+  margin-top: 50px; 
+  width: 100vw; 
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box; 
+}
+.contact-container {
+  width: 90%;
+  max-width: 1100px; 
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.contact-text-wrapper {
+  flex-basis: 45%; 
+  text-align: right;
+  color: #002b4e; 
+  padding-right: 20px; 
+}
+.contact-text-wrapper p {
+  font-size: 1.2rem;
+  margin: 0;
+}
+.contact-text-wrapper h2 {
+  font-size: 3.5rem; 
+  font-weight: 700;
+  margin: 10px 0 30px 0;
+  line-height: 1.2;
+}
+.contact-info p {
+  font-size: 1.4rem;
+  font-weight: 600;
+  direction: ltr; 
+  text-align: right;
+  margin-bottom: 15px;
+  color: #c8102e; 
+}
+.contact-info .icon {
+  font-size: 2rem;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+.contact-form-wrapper {
+  flex-basis: 50%; 
+}
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+.contact-form-wrapper input[type="text"],
+.contact-form-wrapper input[type="email"],
+.contact-form-wrapper input[type="tel"],
+.contact-form-wrapper textarea {
+  width: 100%;
+  padding: 15px 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Cairo', sans-serif; 
+  box-sizing: border-box; 
+  text-align: right; 
+}
+.contact-form-wrapper textarea {
+  resize: vertical; 
+}
+.phone-group {
+  position: relative;
+}
+.phone-group .flag-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px; 
+  font-size: 1.5rem;
+  pointer-events: none; 
+}
+.phone-group input[type="tel"] {
+  padding-right: 60px; 
+  direction: ltr; 
+  text-align: left; 
+}
+.submit-btn {
+  background-color: #273e35; 
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 40px; 
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.25s;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+}
+.submit-btn:hover {
+  background-color: #3a5c4e;
+}
+@media (max-width: 900px) {
+  .contact-container {
+    flex-direction: column-reverse; 
+  }
+  .contact-text-wrapper,
+  .contact-form-wrapper {
+    flex-basis: 100%; 
+    width: 100%;
+    padding: 0;
+  }
+  .contact-text-wrapper {
+    text-align: center; 
+    margin-top: 40px;
+  }
+  .contact-info p {
+    text-align: center;
+    direction: rtl; 
+  }
+  .contact-text-wrapper h2 {
+    font-size: 2.5rem; 
+  }
 }

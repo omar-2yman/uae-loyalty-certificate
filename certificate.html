@@ -5,18 +5,77 @@
   <title>وثيقة قسم الولاء</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
   <link rel="stylesheet" href="style.css">
+  
   <style>
-    /* Override/minor styles for certificate page */
-    body { background: #f4faff; padding-top: 30px; min-height: 100vh; }
-    .controls { text-align: center; margin-bottom: 10px; }
-    input[type="text"] { padding: 10px; font-size: 18px; width: 320px; border: 2px solid #0078d7; border-radius: 8px; }
-    #certificate { margin: 20px auto; width: 900px; height: 640px; background: url('certificate_template.jpg') no-repeat center/cover; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
-    #username { position: absolute; top: 230px; left: 50%; transform: translateX(-50%); font-size: 36px; font-weight: 700; color: #111; text-align: center; padding: 0 20px; word-break: break-word; max-width: 80%; }
-    .download-btn { margin-top: 12px; }
+    body { 
+      background: #f4faff; 
+      padding-top: 30px; 
+      min-height: 100vh; 
+    }
+    
+    .controls { 
+      text-align: center; 
+      margin-bottom: 10px; 
+    }
+    
+    #nameInput {
+      padding: 10px;
+      font-size: 18px;
+      width: 320px;
+      border: 2px solid #0078d7;
+      border-radius: 8px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    
+    #certificate { 
+      margin: 20px auto; 
+      width: 900px; 
+      height: 640px; 
+      background: url('certificate_template.jpg') no-repeat center/cover; 
+      position: relative; 
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2); 
+    }
+    
+    #username { 
+      position: absolute; 
+      top: 36.5%; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      font-size: 34px; 
+      font-weight: 700; 
+      color: #111; 
+      text-align: center; 
+      padding: 0 20px; 
+      word-break: break-word; 
+      max-width: 80%; 
+    }
+    
+    .download-btn { 
+      margin-top: 12px; 
+    }
+    
+    body > h1 {
+        margin-top: 40px; 
+    }
   </style>
 </head>
 <body>
+
+  <header class="main-header">
+    <div class="nav-container">
+        
+        <a href="index.html" class="header-button">وثيقة قسم الولاء</a>
+        
+        <a href="index.html" class="header-logo-link">
+            <img src="Uaeflagteam-logo-1-300x120.png" alt="شعار فريق صون العلم" class="header-logo">
+        </a>
+
+    </div>
+  </header>
+  
   <h1 style="text-align:center;">أدخل اسمك للحصول على الوثيقة</h1>
   <div class="controls">
     <input type="text" id="nameInput" placeholder="اكتب اسمك هنا">
@@ -28,6 +87,51 @@
     <div id="username"></div>
   </div>
 
+  <section class="contact-section">
+    <div class="contact-container">
+        
+        <div class="contact-form-wrapper">
+            <form>
+                <div class="form-group">
+                    <input type="text" id="contact-name" name="name" placeholder="الاسم" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="contact-org" name="organization" placeholder="الجهة">
+                </div>
+                <div class="form-group">
+                    <input type="email" id="contact-email" name="email" placeholder="البريد الإلكتروني" required>
+                </div>
+                <div class="form-group phone-group">
+                    <input type="tel" id="contact-phone" name="phone" placeholder="رقم التواصل">
+                    <span class="flag-icon">🇦🇪</span> 
+                </div>
+                <div class="form-group">
+                    <textarea id="contact-details" name="details" rows="5" placeholder="التفاصيل"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="submit-btn">إرسال</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="contact-text-wrapper">
+            <p>لديك أي سؤال، تعليق، أو ملاحظة؟</p>
+            <h2>يسعدنا أن<br>تشاركنا الرأي</h2>
+            <div class="contact-info">
+                <p>
+                    00971566696157
+                    <span class="icon">🎧</span>
+                </p>
+                <p>
+                    uae@uaeflagteam.ae
+                    <span class="icon">📧</span>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
   <script>
     function generate() {
       const name = document.getElementById('nameInput').value.trim();
@@ -35,10 +139,8 @@
       document.getElementById('username').innerText = name;
       document.getElementById('certificate').style.display = 'block';
       document.getElementById('downloadBtn').style.display = 'inline-block';
-      // scroll to certificate
       setTimeout(() => document.getElementById('certificate').scrollIntoView({behavior: 'smooth'}), 150);
     }
-
     async function downloadPDF() {
       const { jsPDF } = window.jspdf;
       const cert = document.getElementById('certificate');
