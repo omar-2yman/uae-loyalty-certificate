@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>وثيقة قسم الولاء</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Override/minor styles for certificate page */
+    body { background: #f4faff; padding-top: 30px; min-height: 100vh; }
+    .controls { text-align: center; margin-bottom: 10px; }
+    input[type="text"] { padding: 10px; font-size: 18px; width: 320px; border: 2px solid #0078d7; border-radius: 8px; }
+    #certificate { margin: 20px auto; width: 900px; height: 640px; background: url('certificate_template.jpg') no-repeat center/cover; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    #username { position: absolute; top: 230px; left: 50%; transform: translateX(-50%); font-size: 36px; font-weight: 700; color: #111; text-align: center; padding: 0 20px; word-break: break-word; max-width: 80%; }
+    .download-btn { margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;">أدخل اسمك للحصول على الوثيقة</h1>
+  <div class="controls">
+    <input type="text" id="nameInput" placeholder="اكتب اسمك هنا">
+    <button onclick="generate()">إنشاء الوثيقة</button>
+    <button id="downloadBtn" class="download-btn" style="display:none;" onclick="downloadPDF()">تحميل كـ PDF</button>
+  </div>
+
+  <div id="certificate" style="display:none;">
+    <div id="username"></div>
+  </div>
+
+  <script>
+    function generate() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (!name) return alert('من فضلك اكتب اسمك أولاً');
+      document.getElementById('username').innerText = name;
+      document.getElementById('certificate').style.display = 'block';
+      document.getElementById('downloadBtn').style.display = 'inline-block';
+      // scroll to certificate
+      setTimeout(() => document.getElementById('certificate').scrollIntoView({behavior: 'smooth'}), 150);
+    }
+
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const cert = document.getElementById('certificate');
+      const canvas = await html2canvas(cert, { scale: 2 });
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('l', 'mm', [297, 210]);
+      pdf.addImage(imgData, 'PNG', 0, 0, 297, 210);
+      pdf.save('وثيقة_قسم_الولاء.pdf');
+    }
+  </script>
+</body>
+</html>
