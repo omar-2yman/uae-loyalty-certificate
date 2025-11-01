@@ -81,3 +81,12 @@ button {
 button:hover {
   background-color: #0b6a43;
 }
+
+.site-logo {
+  position: absolute; /* لوضع اللوجو بشكل مطلق بالنسبة للصفحة */
+  top: 30px;          /* مسافة 30 بكسل من الأعلى */
+  right: 40px;         /* مسافة 40 بكسل من اليمين */
+  width: 180px;       /* عرض اللوجو (يمكنك تغييره) */
+  height: auto;       /* للحفاظ على أبعاد الصورة */
+  z-index: 3;         /* للتأكد من ظهوره فوق الفيديو وفوق الـ overlay */
+}
